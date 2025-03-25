@@ -29,6 +29,7 @@ async function read_weather(): Promise<WeatherData> {
 
 export default function Home() {
     const [weather, set_weather] = useState<string | undefined>(undefined);
+    const [currentTime, setCurrentTime] = useState<string>("");
 
     useEffect(() => {
         (async () => {
@@ -43,47 +44,65 @@ export default function Home() {
         })();
     }, []);
 
-    return (
-        <div>
-            <header>
-                <p>
-                    <Sun />
-                </p>
-                <p>{weather}</p>
-                <p>
-                    {new Date(Date.now()).toLocaleDateString("en-US", {
-                        month: "2-digit",
-                        day: "2-digit",
-                        year: "numeric",
-                    })}
-                </p>
-            </header>
-            <main>
-                <h1>Welcome home Terrance. :)</h1>
-                <Input
-                    type="search"
-                    placeholder="Hey, what's up again?"
-                    onKeyDownCapture={(e) => {
-                        if (e.key === "Enter") {
-                            window.location.href = `https://duckduckgo.com/?q=${(e.target as HTMLInputElement).value}`;
-                        }
-                    }}
-                />
+    useEffect(() => {
+        const timer = setInterval(() => {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, "0");
+            const minutes = now.getMinutes().toString().padStart(2, "0");
+            const seconds = now.getSeconds().toString().padStart(2, "0");
+            setCurrentTime(`${hours}:${minutes}:${seconds}`);
+        }, 1000);
 
-                <div>
-                    <ul>
-                        <li>Tech News</li>
-                        <li>World & Local News</li>
-                        <li>YouTube</li>
-                    </ul>
+        return () => clearInterval(timer);
+    }, []);
+
+    return (
+        <div className="min-h-screen flex flex-col p-2">
+            <header className="flex justify-end">
+                <div className="flex flex-col">
+                    <div className="flex">
+                        <Sun />
+                        <p>{weather}</p>
+                    </div>
+                    <p>
+                        {new Date(Date.now()).toLocaleDateString("en-US", {
+                            month: "2-digit",
+                            day: "2-digit",
+                            year: "numeric",
+                        })}
+                    </p>
+                    <p>{currentTime}</p>
+                </div>
+            </header>
+            <main className="flex-1 flex flex-col justify-center">
+                <div className="max-w-3/4 mx-auto">
+                    <h1>Welcome home Terrance. :)</h1>
+                    <Input
+                        type="search"
+                        placeholder="Hey, what's up again?"
+                        onKeyDownCapture={(e) => {
+                            if (e.key === "Enter") {
+                                window.location.href = `https://duckduckgo.com/?q=${(e.target as HTMLInputElement).value}`;
+                            }
+                        }}
+                    />
+
+                    <div>
+                        <ul>
+                            <li>Tech News</li>
+                            <li>World & Local News</li>
+                            <li>YouTube</li>
+                        </ul>
+                    </div>
                 </div>
             </main>
-            <footer>
+            <footer className="text-center">
                 <p>
                     Created by{" "}
                     <a
                         href="https://terrancecorley.com"
                         rel="noopener noreferrer"
+                        target="_blank"
                     >
                         Terrance Corley
                     </a>
