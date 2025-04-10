@@ -30,8 +30,7 @@ export default function RootLayout({
                 className={`${geistSans.variable} ${geistMono.variable} antialiased`}
             >
                 <div className="min-h-screen flex flex-col p-2">
-                    <SiteHeader />
-                    <AuthButtons />
+                    <SiteHeader AuthButtons={<AuthButtons />} />
                     <main className="flex-1 flex flex-col justify-center">
                         {children}
                     </main>

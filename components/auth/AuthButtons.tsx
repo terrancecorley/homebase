@@ -1,30 +1,30 @@
 import { signIn, signOut, auth } from "@/auth";
+import { Button } from "@/components/ui/button";
 
 export default async function AuthButtons() {
     const session = await auth();
-    console.log("session: ", session);
 
     return (
         <>
-            <form
-                action={async () => {
-                    "use server";
-                    const data = await signIn("google");
-                    console.log("data: ", data);
-                }}
-            >
-                <button className="border border-b-black" type="submit">
-                    Signin with Google
-                </button>
-            </form>
-            <form
-                action={async () => {
-                    "use server";
-                    await signOut();
-                }}
-            >
-                <button type="submit">Sign Out</button>
-            </form>
+            {!session ? (
+                <form
+                    action={async () => {
+                        "use server";
+                        await signIn("google");
+                    }}
+                >
+                    <Button type="submit">Sign In</Button>
+                </form>
+            ) : (
+                <form
+                    action={async () => {
+                        "use server";
+                        await signOut();
+                    }}
+                >
+                    <Button type="submit">Sign Out</Button>
+                </form>
+            )}
         </>
     );
 }

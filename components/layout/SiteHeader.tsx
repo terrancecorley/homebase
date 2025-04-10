@@ -26,7 +26,11 @@ async function read_weather(): Promise<WeatherData> {
     return response_data;
 }
 
-export default function SiteHeader() {
+type headerProps = {
+    AuthButtons: React.ReactNode;
+};
+
+export default function SiteHeader({ AuthButtons }: headerProps) {
     const [weather, set_weather] = useState<string | undefined>(undefined);
     const [currentTime, setCurrentTime] = useState<string>("");
 
@@ -58,7 +62,8 @@ export default function SiteHeader() {
     return (
         <header className="flex justify-end">
             <div className="flex flex-col">
-                <div className="flex">
+                {AuthButtons}
+                <div className="flex mt-2">
                     <Sun />
                     <p>{weather}</p>
                 </div>
