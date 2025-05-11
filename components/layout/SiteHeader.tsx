@@ -50,10 +50,12 @@ export default function SiteHeader({ AuthButtons }: headerProps) {
     useEffect(() => {
         const timer = setInterval(() => {
             const now = new Date();
-            const hours = now.getHours().toString().padStart(2, "0");
-            const minutes = now.getMinutes().toString().padStart(2, "0");
-            const seconds = now.getSeconds().toString().padStart(2, "0");
-            setCurrentTime(`${hours}:${minutes}:${seconds}`);
+            const formattedTime = now.toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true, 
+            });
+            setCurrentTime(formattedTime);
         }, 1000);
 
         return () => clearInterval(timer);
