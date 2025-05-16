@@ -53,7 +53,7 @@ export default function SiteHeader({ AuthButtons }: headerProps) {
             const formattedTime = now.toLocaleTimeString("en-US", {
                 hour: "2-digit",
                 minute: "2-digit",
-                hour12: true, 
+                hour12: true,
             });
             setCurrentTime(formattedTime);
         }, 1000);
@@ -63,11 +63,11 @@ export default function SiteHeader({ AuthButtons }: headerProps) {
 
     return (
         <header className="flex justify-end">
-            <div className="flex flex-col">
+            <div className="flex flex-col text-base/7">
                 {AuthButtons}
                 <div className="flex mt-2">
                     <Sun />
-                    <p>{weather}</p>
+                    <p className="ml-1">{weather}</p>
                 </div>
                 <p>
                     {new Date(Date.now()).toLocaleDateString("en-US", {
