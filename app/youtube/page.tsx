@@ -50,7 +50,7 @@ async function getLatestYouTubeActivity(): Promise<YouTubeActivityResponse> {
         });
 
         const response = await youtube.activities.list({
-            part: "snippet,contentDetails",
+            part: ["snippet", "contentDetails"],
             channelId: channelId,
             maxResults: 5,
         });
